@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+## Files and cmd
+FILE="$HOME/.cache/eww_launch.xyz"
+EWW="eww"
+
+## Run eww daemon if not running already
+if [[ ! `pidof eww` ]]; then
+    ${EWW} daemon
+    sleep 1
+fi
+
+## Open widgets
+run_con() {
+    ${EWW} open-many \
+           control \
+           system
+}
+
+close_con() {
+    ${EWW} close \
+           control \
+           system
+}
+
+## Launch or close widgets accordingly
+if [[ ! -f "$FILE" ]]; then
+    touch "$FILE"
+    run_con
+else
+    close_con
+    rm "$FILE"
+fi

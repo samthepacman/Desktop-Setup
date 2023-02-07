@@ -1,0 +1,110 @@
+font pango:monospace 8.000000
+floating_modifier Mod4
+default_border pixel 0
+default_floating_border pixel 2
+hide_edge_borders none
+focus_wrapping no
+focus_follows_mouse yes
+focus_on_window_activation smart
+mouse_warping output
+workspace_layout default
+workspace_auto_back_and_forth no
+client.focused #609ce0 #609ce0 #3a3a3a #3f51b5 #81a2be
+client.focused_inactive #0e0f12 #0e0f12 #eceff4 #0e0f12 #0e0f12
+client.unfocused #0e0f12 #0e0f12 #eceff4 #0e0f12 #0e0f12
+client.urgent #cb7073 #cb7073 #eceff4 #cb7073 #0e0f12
+client.placeholder #0c0c0c #000000 #eceff4 #000000 #0e0f12
+client.background #ffffff
+
+bindsym Mod4+1 workspace number 1
+bindsym Mod4+2 workspace number 2
+bindsym Mod4+3 workspace number 3
+bindsym Mod4+4 workspace number 4
+bindsym Mod4+5 workspace number 5
+bindsym Mod4+6 workspace number 6
+bindsym Mod4+7 workspace number 7
+bindsym Mod4+8 workspace number 8
+bindsym Mod4+9 workspace number 9
+bindsym Mod4+Control+Alt+l exec swaylock -C ~/.config/nixpkgs/core/sway/recipes/swaylock/lock.conf
+bindsym Mod4+Control+Down resize grow height 10 px
+bindsym Mod4+Control+Left resize shrink width 10 px
+bindsym Mod4+Control+Right resize grow width 10 px
+bindsym Mod4+Control+Up resize shrink height 10 px
+bindsym Mod4+Control+h resize shrink width 50 px
+bindsym Mod4+Control+j resize grow height 50 px
+bindsym Mod4+Control+k resize shrink height 50 px
+bindsym Mod4+Control+l resize grow width 50 px
+bindsym Mod4+Down focus down
+bindsym Mod4+Left focus left
+bindsym Mod4+Return exec wofi --show drun
+bindsym Mod4+Right focus right
+bindsym Mod4+Shift+1 move container to workspace number 1
+bindsym Mod4+Shift+2 move container to workspace number 2
+bindsym Mod4+Shift+3 move container to workspace number 3
+bindsym Mod4+Shift+4 move container to workspace number 4
+bindsym Mod4+Shift+5 move container to workspace number 5
+bindsym Mod4+Shift+6 move container to workspace number 6
+bindsym Mod4+Shift+7 move container to workspace number 7
+bindsym Mod4+Shift+8 move container to workspace number 8
+bindsym Mod4+Shift+9 move container to workspace number 9
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Return exec exec alacritty
+bindsym Mod4+Shift+Right move right
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+c reload
+bindsym Mod4+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+bindsym Mod4+Shift+h move left
+bindsym Mod4+Shift+j move down
+bindsym Mod4+Shift+k move up
+bindsym Mod4+Shift+l move right
+bindsym Mod4+Shift+minus move scratchpad
+bindsym Mod4+Shift+q kill
+bindsym Mod4+Shift+space floating toggle
+bindsym Mod4+Up focus up
+bindsym Mod4+a splitv
+bindsym Mod4+b splith
+bindsym Mod4+d exec foot --app-id=file ranger
+bindsym Mod4+e layout toggle split
+bindsym Mod4+f fullscreen toggle
+bindsym Mod4+h splith
+bindsym Mod4+j focus down
+bindsym Mod4+k focus up
+bindsym Mod4+l focus right
+bindsym Mod4+minus scratchpad show
+bindsym Mod4+o splith
+bindsym Mod4+q kill
+bindsym Mod4+r mode resize
+bindsym Mod4+s layout stacking
+bindsym Mod4+space focus mode_toggle
+bindsym Mod4+u splitv
+bindsym Mod4+v splitv
+bindsym Mod4+w layout tabbed
+bindsym Mod4+z splith
+
+mode "resize" {
+  bindsym Escape mode default
+  bindsym h resize shrink width 75 px
+  bindsym j resize grow height 75 px
+  bindsym k resize shrink height 75 px
+  bindsym l resize grow width 75 px
+}
+
+bar {
+  font pango:monospace 8.000000
+swaybar_command none
+}
+
+gaps inner 3
+gaps outer 3
+exec mpd
+
+exec /home/sam/.config/init/swayrc
+
+exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 28 ppt 90 ppt
+for_window [app_id="^file$"] floating enable, resize set 60 ppt 50 ppt, move y -10px
+for_window [app_id="^imv$"] fullscreen enable, border pixel 0, opacity 0.95
+for_window [app_id=.*] border normal 
+for_window [app_id=.*] title_border_thickness 3
+for_window [app_id=.*] title_padding 2 

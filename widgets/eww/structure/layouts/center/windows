@@ -1,0 +1,173 @@
+(include "structure/layouts/center/widgets")
+
+(defwindow barCenter
+        :monitor 0
+        :geometry (geometry     :x "0px"
+                                :y "4px"
+                                :width "350px"
+                                :height "40px"
+                                :anchor "bottom center")
+        :windowtype "dock"
+        :wm-ignore true
+(barCenterWidget))
+
+(defwindow user
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "4px"
+                                :width "200px"
+                                :height "200px"
+                                :anchor "top right")
+        :windowtype "dock"
+        :wm-ignore true
+(userWidget))
+
+(defwindow power
+        :monitor 0
+        :geometry (geometry     :x "208px"
+                                :y "4px"
+                                :width "50px"
+                                :height "200px"
+                                :anchor "top right")
+        :windowtype "dock"
+        :wm-ignore true
+(powerWidget))
+
+
+(defwindow date
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "208px"
+                                :width "254px"
+                                :height "108px"
+                                :anchor "top right")
+        :windowtype "dock"
+        :wm-ignore true
+(dateWidget))
+
+(defwindow control
+        :monitor 0
+        :geometry (geometry     :x "200px"
+                                :y "4px"
+                                :width "255px"
+                                :height "145px"
+                                :anchor "top left")
+        :windowtype "dock"
+        :wm-ignore true
+        :focusable true
+(controlWidget))
+
+(defwindow system
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "583px"
+                                :width "255px"
+                                :height "145px"
+                                :anchor "top left")
+        :windowtype "dock"
+        :wm-ignore true
+(systemWidget))
+
+(defwindow volume
+        :monitor 0
+        :geometry (geometry     :x "20px"
+                                :y "4px"
+                                :width "255px"
+                                :height "40px"
+                                :anchor "top left")
+        :windowtype "dock"
+        :wm-ignore true
+(auxWidget))
+
+(defwindow player
+        :monitor 0
+        :geometry (geometry     :x "700px"
+                                :y "4px"
+                                :width "226px"
+                                :height "280px"
+                                :anchor "top left")
+        :windowtype "dock"
+        :wm-ignore true
+(playerWidgets))
+
+(defwindow fetch
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "4px"
+                                :width "156px"
+                                :height "221px"
+                                :anchor "top left")
+        :windowtype "dock"
+        :wm-ignore true
+        :focusable true
+(fetchWidget))
+
+
+(defwindow home
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "4px"
+                                :width "76px"
+                                :height "76px"
+                                :anchor "bottom right")
+        :windowtype "dock"
+        :wm-ignore true
+(homeWidget))
+
+(defwindow downloads
+        :monitor 0
+        :geometry (geometry     :x "84px"
+                                :y "4px"
+                                :width "76px"
+                                :height "76px"
+                                :anchor "bottom right")
+        :windowtype "dock"
+        :wm-ignore true
+(downloadsWidget))
+
+
+(defwindow disk
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "84px"
+                                :width "76px"
+                                :height "76px"
+                                :anchor "bottom right")
+        :windowtype "dock"
+        :wm-ignore true
+(diskWidget))
+
+
+(defwindow pictures
+        :monitor 0
+        :geometry (geometry     :x "84px"
+                                :y "84px"
+                                :width "76px"
+                                :height "76px"
+                                :anchor "bottom right")
+        :windowtype "dock"
+        :wm-ignore true
+(picturesWidget))
+
+(defwindow documents
+        :monitor 0
+        :geometry (geometry     :x "4px"
+                                :y "164px"
+                                :width "76px"
+                                :height "76px"
+                                :anchor "bottom right")
+        :windowtype "dock"
+        :wm-ignore true
+(documentsWidget))
+
+
+(defwindow favourite
+        :monitor 0
+        :geometry (geometry     :x "84px"
+                                :y "164px"
+                                :width "76px"
+                                :height "76px"
+                                :anchor "bottom right")
+        :windowtype "dock"
+        :wm-ignore true
+(favouriteWidget))

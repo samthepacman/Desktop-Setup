@@ -1,0 +1,248 @@
+# https://nixos.wiki/wiki/Home_Manager
+
+# Stuff on this file, and ./*.nix, should work across all of my computing
+# devices. Presently these are: Thinkpad, Macbook and Pixel Slate.
+
+{ config, pkgs, hostName, lib, ...}:
+
+let
+  colorscheme = (import ./cfg/colorschemes/onedark.nix);
+in
+{
+  programs.home-manager.enable = true;
+  
+  nixpkgs.config.allowUnfree = true;
+  #home.file.".config/nixpkgs/config.nix".text = ''
+  # { allowUnfree = true; }
+
+home.packages = with pkgs; [
+    # TUI
+    htop
+    tree 
+    unzip
+    wget
+    youtube-dl
+    exa
+    ripgrep
+    neofetch
+    
+    # GUI
+    zathura
+  ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
+  ################################################## Git Cfg #######################################################
+
+  programs.git = {
+    package = pkgs.gitAndTools.gitFull;
+    enable = true;
+    userName = "Sam1431";
+    userEmail = "sabarishajimon@gmail.com";
+    aliases = {
+      co = "checkout";
+      ci = "commit";
+      s = "status";
+      st = "status";
+    };
+    extraConfig = {
+      core.editor = "nvim";
+      protocol.keybase.allow = "always";
+      credential.helper = "store --file ~/.git-credentials";
+      pull.rebase = "false";
+    };
+  };
+
+  ################################################ Neovim Cfg ######################################################
+
+    programs.neovim = {
+      enable = true;
+      vimAlias = true;
+      extraConfig = builtins.readFile ./cfg/Vim.vim;
+
+      plugins = with pkgs.vimPlugins; [
+        # Syntax / Language Support ##########################
+        vim-nix
+        # vim-ruby # ruby
+        # vim-go # go
+        # vim-fish # fish
+        # vim-toml           # toml
+        # vim-gvpr           # gvpr
+        # rust-vim # rust
+        # vim-pandoc # pandoc (1/2)
+        # vim-pandoc-syntax # pandoc (2/2)
+        # yajs.vim           # JS syntax
+        # es.next.syntax.vim # ES7 syntax
+        goyo-vim
+        vim-startify
+        # UI #################################################
+        dracula-vim # colorscheme
+        vim-gitgutter # status in gutter
+        vim-devicons
+        vim-airline
+        vim-airline-themes
+        # Editor Features ####################################
+        # vim-surround # cs"'
+        # vim-repeat # cs"'...
+        # vim-commentary # gcap
+        # vim-ripgrep
+        # vim-indent-object # >aI
+        # vim-easy-align # vipga
+        # vim-eunuch # :Rename foo.rb
+        # vim-sneak
+        # supertab
+        # vim-endwise        # add end, } after opening block
+        # gitv
+        # tabnine-vim
+        # ale # linting
+        nerdtree
+        # vim-toggle-quickfix
+        # neosnippet.vim
+        # neosnippet-snippets
+        # splitjoin.vim
+        nerdtree
+
+        # Buffer / Pane / File Management ####################
+        fzf-vim # all the things
+
+        # Panes / Larger features ############################
+        tagbar # <leader>5
+        vim-fugitive # Gblame
+      ];
+    };
+
+  ############################################# Alacritty Cfg ######################################################
+
+  programs.alacritty = {
+    enable = true;
+    settings = lib.attrsets.recursiveUpdate (import ../../.config/nixpkgs/cfg/alacritty.nix) {
+    };
+  };
+
+  ############################################## Rofi Cfg ##########################################################
+
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi.override {
+      plugins = [ pkgs.rofi-emoji pkgs.rofi-calc pkgs.rofi-file-browser ];
+    };
+    lines = 7;
+    width = 40;
+    font = "hack 10";
+  };
+  home.file.".config/rofi/colors.rasi".text = ''
+    * {
+      accent: ${colorscheme.accent-primary};
+      background: ${colorscheme.bg-primary};
+      foreground: ${colorscheme.fg-primary};
+    }
+  '';
+  home.file.".config/rofi/grid.rasi".source = ./cfg/rofi/grid.rasi;
+  home.file.".config/rofi/sysmenu.rasi".source = ./cfg/rofi/sysmenu.rasi;
+
+############################################## Polybar Cfg (Commented Out) #########################################
+  #
+  # services.polybar = {
+  #   enable = true;
+  #   config = (import ./cfg/polybar/accented-pills.nix) { colors = colorscheme; };
+  #   script = "polybar main &";
+  # };
+  #
+################################################ Xmonad Cfg ########################################################
+
+  xsession = {
+    enable = true;
+    scriptPath = ".hm-xsession";
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      config = pkgs.writeText "xmonad.hs" ''
+        ${builtins.readFile ./cfg/xmonad/config.hs}
+
+        myFocusedBorderColor = "${colorscheme.accent-primary}"
+        myNormalBorderColor = "${colorscheme.bg-primary-bright}"
+      '';
+    };
+  };
+
+  ############################################ Nu Shell Oh,Yeah ####################################################
+
+    programs.nushell = {
+    enable = true;
+    settings = {
+      skip_welcome_message = true;
+      edit_mode = "vi";
+      prompt = "echo $(starship prompt)";
+    };
+  };
+  ############################################ STARSHIP PROMPT. ####################################################
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+    };
+  };
+
+  ############################################# Compositing ########################################################
+
+  programs.qutebrowser = {
+    enable = true;
+    extraConfig = builtins.readFile ./cfg/qutebrowser/config.py;
+  };
+
+  ############################################# Compositing ########################################################
+
+    services.picom = {
+    enable = true;
+    package = pkgs.callPackage ./cfg/picom-tryone.nix { };
+    experimentalBackends = true;
+    
+    #blur = true;
+    #blurExclude = [ "window_type = 'dock'" "window_type = 'desktop'" ];
+    
+    fade = true;
+    fadeDelta = 2;
+    
+    shadow = true;
+    shadowOffsets = [ (-7) (-7) ];
+    shadowOpacity = "0.7";
+    #shadowExclude = [ "window_type *= 'normal' && ! name ~= ''" ];
+    noDockShadow = false;
+    noDNDShadow = false;
+    
+    activeOpacity = "1.0";
+    inactiveOpacity = "0.8";
+    opacityRule = [ "80:name *?= 'xmobar'" "80:name *?= 'shellPrompt'" ];
+    menuOpacity = "0.8";
+    backend = "glx";
+    vSync = true;
+
+    extraOptions = ''
+      shadow-radius = 7;
+      clear-shadow = true;
+      frame-opacity = 0.7;
+      blur-method = "dual_kawase";
+      blur-strength = 1;
+      alpha-step = 0.06;
+      detect-client-opacity = true;
+      detect-rounded-corners = true;
+      paint-on-overlay = true;
+      detect-transient = true;
+      mark-wmwin-focused = true;
+      mark-ovredir-focused = true;
+    '';
+  };
+
+
+  ################################################## Emacs #########################################################
+  
+  programs.emacs = {
+    enable = true;
+  };
+  
+  ################################################# THE End #############################################
+}
+

@@ -1,0 +1,29 @@
+
+max-visible=5
+sort=-time
+
+layer=overlay
+anchor=top-right
+
+font=Iosevka Nerd Font 11
+background-color=#08090a
+text-color=#FFFFFFFF
+width=280
+height=100
+margin=3
+padding=10
+border-size=0
+border-color=#08090a
+border-radius=0
+progress-color=over #5588AAFF
+icons=true
+max-icon-size=64
+
+markup=true
+actions=true
+format=<b>%s</b>\n%b
+default-timeout=5000
+ignore-timeout=false
+
+
+

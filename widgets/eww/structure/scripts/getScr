@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+alias nf=notify-send
+alias sl="sleep 1"
+
+nf 5; sl; nf 4; sl; nf 3; sl; nf 2; sl; nf 1; pushd ~/PERSISTENT/Pictures; grim; popd
